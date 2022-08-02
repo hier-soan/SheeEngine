@@ -1,4 +1,5 @@
 #include <SheeEngine.h>
+#include <iostream>
 
 class GameApplication : public SheeEngine::Application
 {
@@ -14,7 +15,9 @@ public:
 	}
 };
 
+
 SheeEngine::Application* SheeEngine::CreateApplication()
 {
 	return new GameApplication();
 }
+
