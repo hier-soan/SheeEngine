@@ -11,7 +11,7 @@ int main(int argc, char** argv)
 	SENGINE_LOG_INFO("Hello SheeEngine");
 
 	auto APP = SheeEngine::CreateApplication();
-	APP->Run();
+	APP->Update();
 	delete(APP);
 }
 

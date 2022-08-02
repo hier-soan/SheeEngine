@@ -26,6 +26,8 @@ namespace SheeEngine
 		virtual EventType GetEventType() = 0;
 		virtual std::string GetDetail() = 0;
 
+		bool GetHandleStatus() const { return bHandle; }
+
 	private:
 		bool bHandle;
 	};

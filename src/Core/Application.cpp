@@ -1,7 +1,6 @@
 #include "seafx.h"
 #include "Application.h"
 #include "GLFW/glfw3.h"
-#include "Events/WindowEvent.h"
 
 namespace SheeEngine
 {
@@ -14,15 +13,22 @@ namespace SheeEngine
 
 	Application::~Application()
 	{
+
 	}
 
-	void Application::Run()
+	void Application::Update()
 	{
 		while (bIsRunning)
 		{
 			glClearColor(0, 0, 0, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
 			m_Window->Update();
+
+
+			for (auto layer : m_ApplicationLayerStack)
+			{
+				layer->Update();
+			}
 		}
 	}
 
@@ -32,13 +38,23 @@ namespace SheeEngine
 
 		EventDispatcher dispacther(event);
 		dispacther.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
-		dispacther.Dispatch<WindowResizeEvent>(std::bind(&Application::OnWindowResize, this, std::placeholders::_1));
-		dispacther.Dispatch<MouseMoveEvent>(std::bind(&Application::OnMouseMove, this, std::placeholders::_1));
-		dispacther.Dispatch<MousePressEvent>(std::bind(&Application::OnMousePress, this, std::placeholders::_1));
-		dispacther.Dispatch<MouseReleaseEvent>(std::bind(&Application::OnMouseRelease, this, std::placeholders::_1));
-		dispacther.Dispatch<MouseScrolledEvent>(std::bind(&Application::OnMouseScrolled, this, std::placeholders::_1));
-		dispacther.Dispatch<KeyboardPressEvent>(std::bind(&Application::OnKeyboardPress, this, std::placeholders::_1));
-		dispacther.Dispatch<KeyboardReleaseEvent>(std::bind(&Application::OnKeyboardRelease, this, std::placeholders::_1));
+	//	dispacther.Dispatch<WindowResizeEvent>(std::bind(&Application::OnWindowResize, this, std::placeholders::_1));
+	//	dispacther.Dispatch<MouseMoveEvent>(std::bind(&Application::OnMouseMove, this, std::placeholders::_1));
+	//	dispacther.Dispatch<MousePressEvent>(std::bind(&Application::OnMousePress, this, std::placeholders::_1));
+	//	dispacther.Dispatch<MouseReleaseEvent>(std::bind(&Application::OnMouseRelease, this, std::placeholders::_1));
+	//	dispacther.Dispatch<MouseScrolledEvent>(std::bind(&Application::OnMouseScrolled, this, std::placeholders::_1));
+	//	dispacther.Dispatch<KeyboardPressEvent>(std::bind(&Application::OnKeyboardPress, this, std::placeholders::_1));
+	//	dispacther.Dispatch<KeyboardReleaseEvent>(std::bind(&Application::OnKeyboardRelease, this, std::placeholders::_1));
+
+		for (auto it = m_ApplicationLayerStack.end(); it != m_ApplicationLayerStack.begin(); )
+		{
+			// should decline first because it = .end() at the beginning, or will crash
+			(*--it)->OnEvent(event);
+			if (event.GetHandleStatus())
+			{
+				break;
+			}
+		}
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent& event)
@@ -88,5 +104,15 @@ namespace SheeEngine
 	{
 		std::cout << event.GetAction() << "," << event.GetKey() << std::endl;
 		return true;
+	}
+
+	void Application::LayerStackPush(Layer* layer)
+	{
+		m_ApplicationLayerStack.PushLayer(layer);
+	}
+
+	void Application::LayerStackRemove(Layer* layer)
+	{
+		m_ApplicationLayerStack.PopLayer(layer);
 	}
 }

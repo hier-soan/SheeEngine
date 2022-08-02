@@ -5,6 +5,8 @@
 #include "Events/WindowEvent.h"
 #include "Events/MouseEvent.h"
 #include "Events/KeyboardEvent.h"
+#include "Core/Layer/Layer.h"
+#include "Core/Layer/LayerStack.h"
 #include <iostream>
 
 namespace SheeEngine
@@ -16,7 +18,7 @@ namespace SheeEngine
 
 		virtual ~Application();
 
-		void Run();
+		void Update();
 
 		void OnEvent(Event& event);
 		
@@ -36,9 +38,15 @@ namespace SheeEngine
 
 		bool OnKeyboardRelease(KeyboardReleaseEvent& event);
 
+		void LayerStackPush(Layer* layer);
+
+		void LayerStackRemove(Layer* layer);
+
 	private:
 		std::unique_ptr<Window> m_Window;
 		bool bIsRunning;
+
+		LayerStack m_ApplicationLayerStack;
 	};
 
 	Application* CreateApplication();
