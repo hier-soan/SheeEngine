@@ -3,6 +3,7 @@
 #include "Core/Events/WindowEvent.h"
 #include "Core/Events/MouseEvent.h"
 #include "Core/Events/KeyboardEvent.h"
+#include "glad/glad.h"
 
 namespace SheeEngine
 {
@@ -26,6 +27,8 @@ namespace SheeEngine
 	void WindowsWindow::Init()
 	{
 		SENGINE_LOG_INFO("Create Window Name:{0}, (W, H):({1}, {2})", m_WindowInfo.Name, m_WindowInfo.Width, m_WindowInfo.Height);
+
+		// glfw init
 		if (!b_GLFWInitialized)
 		{
 			int success = glfwInit();
@@ -36,6 +39,12 @@ namespace SheeEngine
 		}
 		m_Window = glfwCreateWindow(m_WindowInfo.Width, m_WindowInfo.Height, m_WindowInfo.Name.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
+
+		// glad init
+		int GladInitSussessful = gladLoadGLLoader(GLADloadproc(glfwGetProcAddress));
+		SENGINE_ASSERT(!GladInitSussessful, "Glad init fail");
+
+		// store the window config
 		glfwSetWindowUserPointer(m_Window, &m_WindowInfo);  // 暂时存储窗口数据
 
 		SetVSync(true);

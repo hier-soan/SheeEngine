@@ -1,6 +1,7 @@
 #include "seafx.h"
 #include "Application.h"
-#include "GLFW/glfw3.h"
+#include "glad/glad.h"
+#include "glfw/glfw3.h"
 
 namespace SheeEngine
 {
@@ -24,7 +25,6 @@ namespace SheeEngine
 			glClear(GL_COLOR_BUFFER_BIT);
 			m_Window->Update();
 
-
 			for (auto layer : m_ApplicationLayerStack)
 			{
 				layer->Update();
@@ -45,6 +45,9 @@ namespace SheeEngine
 	//	dispacther.Dispatch<MouseScrolledEvent>(std::bind(&Application::OnMouseScrolled, this, std::placeholders::_1));
 	//	dispacther.Dispatch<KeyboardPressEvent>(std::bind(&Application::OnKeyboardPress, this, std::placeholders::_1));
 	//	dispacther.Dispatch<KeyboardReleaseEvent>(std::bind(&Application::OnKeyboardRelease, this, std::placeholders::_1));
+
+		unsigned int id;
+		glGenBuffers(1, &id);
 
 		for (auto it = m_ApplicationLayerStack.end(); it != m_ApplicationLayerStack.begin(); )
 		{

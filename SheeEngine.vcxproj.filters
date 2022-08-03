@@ -80,5 +80,8 @@
     <ClCompile Include="src\Core\Layer\LayerStack.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Dependencies\glad\src\glad.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
