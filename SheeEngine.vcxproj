@@ -11,6 +11,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dependencies\imgui\imconfig.h" />
+    <ClInclude Include="Dependencies\imgui\imgui.h" />
+    <ClInclude Include="Dependencies\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="Dependencies\imgui\imgui_internal.h" />
+    <ClInclude Include="Dependencies\imgui\imstb_rectpack.h" />
+    <ClInclude Include="Dependencies\imgui\imstb_textedit.h" />
+    <ClInclude Include="Dependencies\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\Core\imgui\ImguiLayer.h" />
     <ClInclude Include="src\Core\Layer\LayerStack.h" />
     <ClInclude Include="src\Core\Layer\Layer.h" />
     <ClInclude Include="src\Core\Events\ApplicationEvent.h" />
@@ -31,6 +41,28 @@
     <ClCompile Include="Dependencies\glad\src\glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Dependencies\imgui\imgui.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Dependencies\imgui\imgui_demo.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Dependencies\imgui\imgui_draw.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Dependencies\imgui\imgui_impl_glfw.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Dependencies\imgui\imgui_impl_opengl3.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Dependencies\imgui\imgui_tables.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\Core\imgui\ImguiLayer.cpp" />
     <ClCompile Include="src\Core\Layer\LayerStack.cpp" />
     <ClCompile Include="src\Core\Layer\Layer.cpp" />
     <ClCompile Include="src\Core\Log.cpp" />
@@ -91,7 +123,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLFW_INCLUDE_NONE;SENGINE_ASSERT_ENABLE;SENGINE_PLATFORM_WINDOWS;SENGINE_BUILD_DLL;SENGINE_BUILD_DLL；_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Dependencies\glad\include;$(SolutionDir)\Dependencies\glfw\include;$(SolutionDir)Dependencies;$(SolutionDir)src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\src;$(SolutionDir)\Dependencies\glad\include;$(SolutionDir)\Dependencies\glfw\include;$(SolutionDir)Dependencies;$(SolutionDir)src\PreCompile</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>seafx.h</PrecompiledHeaderFile>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>

@@ -66,6 +66,7 @@ public:
 	GameApplication()
 	{
 		LayerStackPush(new GameLayerRender());
+		LayerStackPush(new SheeEngine::ImguiLayer());
 		LayerStackPush(new GameLayerEvent());
 	}
 

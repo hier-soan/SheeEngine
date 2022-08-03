@@ -7,6 +7,8 @@
 
 namespace SheeEngine
 {
+	GLFWwindow* WindowsWindow::m_Window = nullptr;
+
 	Window* Window::Create(const WindowConfig& config)
 	{
 		return new WindowsWindow(config);

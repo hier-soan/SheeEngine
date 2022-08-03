@@ -19,7 +19,11 @@ namespace SheeEngine
 
 		virtual void SetVSync(bool value) override;
 
+
 		void Init();
+
+
+		static GLFWwindow* GetGLFWwindow() { return m_Window; }
 
 	private:
 		// 集中数据的同时方便后面lambda表达式的书写
@@ -37,7 +41,7 @@ namespace SheeEngine
 
 		bool bVSync;
 
-		GLFWwindow* m_Window;
+		static GLFWwindow* m_Window;
 	};
 }
 

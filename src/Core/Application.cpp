@@ -5,8 +5,12 @@
 
 namespace SheeEngine
 {
+	Application* Application::m_Instance = nullptr;
+
 	Application::Application() : bIsRunning(true)
 	{
+		m_Instance = this;
+
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		auto BindFunc = std::bind(&Application::OnEvent, this, std::placeholders::_1);
 		m_Window->SetEventCallback(BindFunc);
@@ -23,12 +27,14 @@ namespace SheeEngine
 		{
 			glClearColor(0, 0, 0, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
-			m_Window->Update();
 
 			for (auto layer : m_ApplicationLayerStack)
 			{
 				layer->Update();
 			}
+
+			// swapbuffer must at last
+			m_Window->Update();
 		}
 	}
 
@@ -46,8 +52,6 @@ namespace SheeEngine
 	//	dispacther.Dispatch<KeyboardPressEvent>(std::bind(&Application::OnKeyboardPress, this, std::placeholders::_1));
 	//	dispacther.Dispatch<KeyboardReleaseEvent>(std::bind(&Application::OnKeyboardRelease, this, std::placeholders::_1));
 
-		unsigned int id;
-		glGenBuffers(1, &id);
 
 		for (auto it = m_ApplicationLayerStack.end(); it != m_ApplicationLayerStack.begin(); )
 		{
@@ -112,10 +116,12 @@ namespace SheeEngine
 	void Application::LayerStackPush(Layer* layer)
 	{
 		m_ApplicationLayerStack.PushLayer(layer);
+		layer->OnPushInLayerStack();
 	}
 
 	void Application::LayerStackRemove(Layer* layer)
 	{
 		m_ApplicationLayerStack.PopLayer(layer);
+		layer->OnRemoveFromLayerStack();
 	}
 }

@@ -42,11 +42,18 @@ namespace SheeEngine
 
 		void LayerStackRemove(Layer* layer);
 
+
+		inline static Application* GetInstance() { return m_Instance; }
+
+		inline Window& GetWindow() { return *m_Window; }
+
 	private:
 		std::unique_ptr<Window> m_Window;
 		bool bIsRunning;
 
 		LayerStack m_ApplicationLayerStack;
+
+		static Application* m_Instance;
 	};
 
 	Application* CreateApplication();
