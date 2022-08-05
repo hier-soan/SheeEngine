@@ -65,9 +65,7 @@ class GameApplication : public SheeEngine::Application
 public:
 	GameApplication()
 	{
-		LayerStackPush(new GameLayerRender());
-		LayerStackPush(new SheeEngine::ImguiLayer());
-		LayerStackPush(new GameLayerEvent());
+		SuperstratumPush(new SheeEngine::ImguiLayer());
 	}
 
 	~GameApplication()

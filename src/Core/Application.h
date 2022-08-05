@@ -9,6 +9,13 @@
 #include "Core/Layer/LayerStack.h"
 #include <iostream>
 
+//#include <glm/vec3.hpp> // glm::vec3
+//#include <glm/vec4.hpp> // glm::vec4
+//#include <glm/mat4x4.hpp> // glm::mat4
+//#include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
+//#include <glm/gtc/constants.hpp> // glm::pi
+
+
 namespace SheeEngine
 {
 	class SENGINE_API Application
@@ -41,6 +48,10 @@ namespace SheeEngine
 		void LayerStackPush(Layer* layer);
 
 		void LayerStackRemove(Layer* layer);
+
+		void SuperstratumPush(Layer* layer);
+
+		void SuperstratumRemove(Layer* layer);
 
 
 		inline static Application* GetInstance() { return m_Instance; }

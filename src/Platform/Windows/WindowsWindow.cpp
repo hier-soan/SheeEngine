@@ -7,8 +7,6 @@
 
 namespace SheeEngine
 {
-	GLFWwindow* WindowsWindow::m_Window = nullptr;
-
 	Window* Window::Create(const WindowConfig& config)
 	{
 		return new WindowsWindow(config);
@@ -23,13 +21,12 @@ namespace SheeEngine
 	WindowsWindow::~WindowsWindow()
 	{
 		glfwDestroyWindow(m_Window);
+		glfwTerminate();
 	}
 
 	bool b_GLFWInitialized = false;
 	void WindowsWindow::Init()
 	{
-		SENGINE_LOG_INFO("Create Window Name:{0}, (W, H):({1}, {2})", m_WindowInfo.Name, m_WindowInfo.Width, m_WindowInfo.Height);
-
 		// glfw init
 		if (!b_GLFWInitialized)
 		{

@@ -22,8 +22,7 @@ namespace SheeEngine
 
 		void Init();
 
-
-		static GLFWwindow* GetGLFWwindow() { return m_Window; }
+		virtual void* GetNativeWindow() const override { return m_Window; }
 
 	private:
 		// 集中数据的同时方便后面lambda表达式的书写
@@ -41,7 +40,7 @@ namespace SheeEngine
 
 		bool bVSync;
 
-		static GLFWwindow* m_Window;
+		GLFWwindow* m_Window;
 	};
 }
 

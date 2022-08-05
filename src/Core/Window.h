@@ -35,6 +35,8 @@ namespace SheeEngine
 
 		static Window* Create(const WindowConfig& config = WindowConfig());
 
+		virtual void* GetNativeWindow() const = 0;
+
 	private:
 		
 	};

@@ -25,7 +25,7 @@ namespace SheeEngine
 	{
 		while (bIsRunning)
 		{
-			glClearColor(0, 0, 0, 1);
+			glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			for (auto layer : m_ApplicationLayerStack)
@@ -40,18 +40,9 @@ namespace SheeEngine
 
 	void Application::OnEvent(Event& event)
 	{
-		//SENGINE_LOG_INFO("{0}", event.GetDetail());
-
+		// imgui didn't bind WindowCloseEvent with Callback, we should bind ourselves;
 		EventDispatcher dispacther(event);
 		dispacther.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
-	//	dispacther.Dispatch<WindowResizeEvent>(std::bind(&Application::OnWindowResize, this, std::placeholders::_1));
-	//	dispacther.Dispatch<MouseMoveEvent>(std::bind(&Application::OnMouseMove, this, std::placeholders::_1));
-	//	dispacther.Dispatch<MousePressEvent>(std::bind(&Application::OnMousePress, this, std::placeholders::_1));
-	//	dispacther.Dispatch<MouseReleaseEvent>(std::bind(&Application::OnMouseRelease, this, std::placeholders::_1));
-	//	dispacther.Dispatch<MouseScrolledEvent>(std::bind(&Application::OnMouseScrolled, this, std::placeholders::_1));
-	//	dispacther.Dispatch<KeyboardPressEvent>(std::bind(&Application::OnKeyboardPress, this, std::placeholders::_1));
-	//	dispacther.Dispatch<KeyboardReleaseEvent>(std::bind(&Application::OnKeyboardRelease, this, std::placeholders::_1));
-
 
 		for (auto it = m_ApplicationLayerStack.end(); it != m_ApplicationLayerStack.begin(); )
 		{
@@ -122,6 +113,18 @@ namespace SheeEngine
 	void Application::LayerStackRemove(Layer* layer)
 	{
 		m_ApplicationLayerStack.PopLayer(layer);
+		layer->OnRemoveFromLayerStack();
+	}
+
+	void Application::SuperstratumPush(Layer* layer)
+	{
+		m_ApplicationLayerStack.PushSuperstratumLayer(layer);
+		layer->OnPushInLayerStack();
+	}
+
+	void Application::SuperstratumRemove(Layer* layer)
+	{
+		m_ApplicationLayerStack.PopSuperstratumLayer(layer);
 		layer->OnRemoveFromLayerStack();
 	}
 }

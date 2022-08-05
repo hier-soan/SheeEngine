@@ -23,7 +23,6 @@ namespace SheeEngine
 		virtual void OnEvent(Event& event) override;
 
 	private:
-		float m_Time = 0.0f;
 	};
 }
 
