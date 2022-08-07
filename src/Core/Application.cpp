@@ -168,11 +168,8 @@ namespace SheeEngine
 		m_VAO.reset(new VertexArray());
 		m_VAO->Bind();
 
-		std::shared_ptr<VertexBuffer> VBO(new VertexBuffer(squareVertices, sizeof(squareVertices), bufferLayout));
-		std::shared_ptr<IndexBuffer> EBO(new IndexBuffer(squareIndices, sizeof(squareIndices)));
-
-		m_VAO->SetVBO(VBO);
-		m_VAO->SetEBO(EBO);
+		m_VAO->SetVBO(squareVertices, sizeof(squareVertices), bufferLayout);
+		m_VAO->SetEBO(squareIndices, sizeof(squareIndices));
 
 	}
 

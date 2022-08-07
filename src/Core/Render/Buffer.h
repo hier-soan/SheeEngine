@@ -122,12 +122,17 @@ namespace SheeEngine
 		void UnBind();
 
 		void SetVBO(const std::shared_ptr<VertexBuffer>& vbo);
+		void SetVBO(float* vertices, unsigned int size, const VertexBufferLayout& layout);
+
 		void SetEBO(const std::shared_ptr<IndexBuffer>& ebo);
+		void SetEBO(unsigned int* vertices, unsigned int size);
 
 	private:
 		unsigned int ID;
 		std::shared_ptr<VertexBuffer> m_VertexBuffer;
 		std::shared_ptr<IndexBuffer> m_IndexBuffer;
+
+		void ConfigAttribPointor();
 	};
 }
 
