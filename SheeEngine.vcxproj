@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\Render\Buffer.h" />
     <ClInclude Include="Dependencies\glm\common.hpp" />
     <ClInclude Include="Dependencies\glm\detail\func_common.hpp" />
     <ClInclude Include="Dependencies\glm\detail\func_exponential.hpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Dependencies\imgui\imstb_rectpack.h" />
     <ClInclude Include="Dependencies\imgui\imstb_textedit.h" />
     <ClInclude Include="Dependencies\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\Core\Render\Shader.h" />
     <ClInclude Include="src\Core\imgui\ImguiLayer.h" />
     <ClInclude Include="src\Core\Layer\LayerStack.h" />
     <ClInclude Include="src\Core\Layer\Layer.h" />
@@ -182,6 +184,7 @@
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\Render\Buffer.cpp" />
     <ClCompile Include="Dependencies\glad\src\glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -209,6 +212,7 @@
     <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Core\Render\Shader.cpp" />
     <ClCompile Include="src\Core\imgui\ImguiLayer.cpp" />
     <ClCompile Include="src\Core\Layer\LayerStack.cpp" />
     <ClCompile Include="src\Core\Layer\Layer.cpp" />
@@ -371,6 +375,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
+    <CopyLocalDeploymentContent>false</CopyLocalDeploymentContent>
+    <CopyCppRuntimeToOutputDir>false</CopyCppRuntimeToOutputDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -383,7 +389,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLFW_INCLUDE_NONE;SENGINE_ASSERT_ENABLE;SENGINE_PLATFORM_WINDOWS;SENGINE_BUILD_DLL;SENGINE_BUILD_DLL；_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Dependencies\glm;$(SolutionDir)\src;$(SolutionDir)\Dependencies\glad\include;$(SolutionDir)\Dependencies\glfw\include;$(SolutionDir)Dependencies;$(SolutionDir)src\PreCompile;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\src\Core\GLSL;$(SolutionDir)\Dependencies\glm;$(SolutionDir)\src;$(SolutionDir)\Dependencies\glad\include;$(SolutionDir)\Dependencies\glfw\include;$(SolutionDir)Dependencies;$(SolutionDir)src\PreCompile;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>seafx.h</PrecompiledHeaderFile>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -396,6 +402,19 @@
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
     </Link>
+    <PostBuildEvent>
+      <Command>SET SourceFile=$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\SheeEngine.dll
+SET GenFile=$(SolutionDir)bin\$(Configuration)-$(Platform)\Game\
+ 
+if not exist %GenFile% (
+        md %GenFile%
+        copy %SourceFile% %GenFile%
+    ) else (
+        copy %SourceFile% %GenFile%
+    )
+
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

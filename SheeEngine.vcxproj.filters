@@ -522,6 +522,12 @@
     <ClInclude Include="Dependencies\glm\vector_relational.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Render\Shader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Render\Buffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -570,6 +576,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Dependencies\glm\detail\glm.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Render\Shader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Render\Buffer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

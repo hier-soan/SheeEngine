@@ -7,7 +7,12 @@
 #include "Events/KeyboardEvent.h"
 #include "Core/Layer/Layer.h"
 #include "Core/Layer/LayerStack.h"
+#include "Core/Render/Buffer.h"
+#include "Core/Render/Shader.h"
+
 #include <iostream>
+
+#include <memory>
 
 //#include <glm/vec3.hpp> // glm::vec3
 //#include <glm/vec4.hpp> // glm::vec4
@@ -65,6 +70,15 @@ namespace SheeEngine
 		LayerStack m_ApplicationLayerStack;
 
 		static Application* m_Instance;
+
+
+		// buffer
+		std::shared_ptr<VertexArray> m_VAO;
+
+
+		void InitSquare();
+		void RenderSquare();
+
 	};
 
 	Application* CreateApplication();

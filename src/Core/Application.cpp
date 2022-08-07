@@ -3,6 +3,8 @@
 #include "glad/glad.h"
 #include "glfw/glfw3.h"
 
+#include <filesystem>
+
 namespace SheeEngine
 {
 	Application* Application::m_Instance = nullptr;
@@ -14,6 +16,9 @@ namespace SheeEngine
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		auto BindFunc = std::bind(&Application::OnEvent, this, std::placeholders::_1);
 		m_Window->SetEventCallback(BindFunc);
+
+		// test
+		InitSquare();
 	}
 
 	Application::~Application()
@@ -27,6 +32,9 @@ namespace SheeEngine
 		{
 			glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
 			glClear(GL_COLOR_BUFFER_BIT);
+
+			// test
+			RenderSquare();
 
 			for (auto layer : m_ApplicationLayerStack)
 			{
@@ -126,5 +134,53 @@ namespace SheeEngine
 	{
 		m_ApplicationLayerStack.PopSuperstratumLayer(layer);
 		layer->OnRemoveFromLayerStack();
+	}
+
+
+
+	/**
+	*
+	* Test
+	*
+	*/
+
+
+	float squareVertices[] = {
+		 0.5f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,    // top right
+		 0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom right
+		-0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,   // bottom left
+		-0.5f,  0.5f, 0.0f,  1.0f, 1.0f, 1.0f    // top left 
+	};
+
+	unsigned int squareIndices[] = {
+			 0, 1, 3,  // first Triangle
+			 1, 2, 3   // second Triangle
+	};
+
+	void Application::InitSquare()
+	{
+		std::vector<VertexAttribute> v_layout;
+		v_layout.push_back(VertexAttribute(0, "Position", AttributeType::Postion));
+		v_layout.push_back(VertexAttribute(1, "Color", AttributeType::Color));
+
+		VertexBufferLayout bufferLayout(v_layout);
+
+		m_VAO.reset(new VertexArray());
+		m_VAO->Bind();
+
+		std::shared_ptr<VertexBuffer> VBO(new VertexBuffer(squareVertices, sizeof(squareVertices), bufferLayout));
+		std::shared_ptr<IndexBuffer> EBO(new IndexBuffer(squareIndices, sizeof(squareIndices)));
+
+		m_VAO->SetVBO(VBO);
+		m_VAO->SetEBO(EBO);
+
+	}
+
+	void Application::RenderSquare()
+	{
+		Shader squareShader("D:/GameCode/SheeEngine/src/Core/GLSL/ver_square.glsl", "D:/GameCode/SheeEngine/src/Core/GLSL//fra_square.glsl");
+		squareShader.Use();
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);	
+		squareShader.UnUse();
 	}
 }
