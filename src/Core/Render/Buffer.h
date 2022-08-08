@@ -107,8 +107,11 @@ namespace SheeEngine
 		void Bind();
 		void UnBind();
 
+		inline unsigned int GetIndexNums() const { return m_IndexNums; }
+
 	private:
 		unsigned int ID;
+		unsigned int m_IndexNums;
 	};
 
 
@@ -126,6 +129,9 @@ namespace SheeEngine
 
 		void SetEBO(const std::shared_ptr<IndexBuffer>& ebo);
 		void SetEBO(unsigned int* vertices, unsigned int size);
+
+		inline std::shared_ptr<VertexBuffer> GetVBO() const { return m_VertexBuffer; }
+		inline std::shared_ptr<IndexBuffer>  GetEBO() const { return m_IndexBuffer; }
 
 	private:
 		unsigned int ID;

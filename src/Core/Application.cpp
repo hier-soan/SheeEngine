@@ -1,7 +1,7 @@
 #include "seafx.h"
 #include "Application.h"
-#include "glad/glad.h"
 #include "glfw/glfw3.h"
+#include "Render/Render.h"
 
 #include <filesystem>
 
@@ -30,8 +30,7 @@ namespace SheeEngine
 	{
 		while (bIsRunning)
 		{
-			glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
-			glClear(GL_COLOR_BUFFER_BIT);
+			RenderStaticLib::SetBasicColor(0.45f, 0.55f, 0.60f, 1.00f);
 
 			// test
 			RenderSquare();
@@ -63,54 +62,50 @@ namespace SheeEngine
 		}
 	}
 
+
+	// Custom Event System
 	bool Application::OnWindowClose(WindowCloseEvent& event)
 	{
 		bIsRunning = false;
 		std::cout << event.GetDetail() << std::endl;
 		return true;
 	}
-
 	bool Application::OnWindowResize(WindowResizeEvent& event)
 	{
 		std::cout << event.GetHeight() << "," << event.GetWidth() << std::endl;
 		return true;
 	}
-
 	bool Application::OnMouseMove(MouseMoveEvent& event)
 	{
 		std::cout << event.GetXOffset() << "," << event.GetYOffset() << std::endl;
 		return true;
 	}
-
 	bool Application::OnMousePress(MousePressEvent& event)
 	{
 		std::cout << event.GetAction() << "," << event.GetButton() << std::endl;
 		return true;
 	}
-
 	bool Application::OnMouseRelease(MouseReleaseEvent& event)
 	{
 		std::cout << event.GetAction() << "," << event.GetButton() << std::endl;
 		return true;
 	}
-
 	bool Application::OnMouseScrolled(MouseScrolledEvent& event)
 	{
 		std::cout << event.GetXOffset() << "," << event.GetYOffset() << std::endl;
 		return true;
 	}
-
 	bool Application::OnKeyboardPress(KeyboardPressEvent& event)
 	{
 		std::cout << event.GetAction() << "," << event.GetKey() << std::endl;
 		return true;
 	}
-
 	bool Application::OnKeyboardRelease(KeyboardReleaseEvent& event)
 	{
 		std::cout << event.GetAction() << "," << event.GetKey() << std::endl;
 		return true;
 	}
+
 
 	void Application::LayerStackPush(Layer* layer)
 	{
@@ -170,14 +165,13 @@ namespace SheeEngine
 
 		m_VAO->SetVBO(squareVertices, sizeof(squareVertices), bufferLayout);
 		m_VAO->SetEBO(squareIndices, sizeof(squareIndices));
-
 	}
 
 	void Application::RenderSquare()
 	{
-		Shader squareShader("D:/GameCode/SheeEngine/src/Core/GLSL/ver_square.glsl", "D:/GameCode/SheeEngine/src/Core/GLSL//fra_square.glsl");
-		squareShader.Use();
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);	
-		squareShader.UnUse();
+		std::shared_ptr<Shader> squareShader(new Shader("D:/GameCode/SheeEngine/src/Core/GLSL/ver_square.glsl", 
+				"D:/GameCode/SheeEngine/src/Core/GLSL//fra_square.glsl"));
+
+		RenderStaticLib::Draw(squareShader, m_VAO);
 	}
 }
