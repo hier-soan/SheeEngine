@@ -129,4 +129,77 @@ namespace SheeEngine
 	{
 		glUseProgram(0);
 	}
+
+
+	void Shader::setUniformBool(const std::string& uniform, bool value) const
+	{
+		unsigned int location = glGetUniformLocation(ID, uniform.c_str());
+		glUniform1i(location, (int)value);
+	}
+
+	void Shader::setUniformInt(const std::string& uniform, int value) const
+	{
+		unsigned int location = glGetUniformLocation(ID, uniform.c_str());
+		glUniform1i(location, value);
+	}
+
+	void Shader::setUniformFloat(const std::string& uniform, float value) const
+	{
+		unsigned int location = glGetUniformLocation(ID, uniform.c_str());
+		glUniform1f(location, value);
+	}
+
+	void Shader::setUniformVec2(const std::string& uniform, const glm::vec2& value) const
+	{
+		unsigned int location = glGetUniformLocation(ID, uniform.c_str());
+		glUniform2fv(location, 1, &value[0]);
+	}
+
+	void Shader::setUniformVec2(const std::string& uniform, float x, float y) const
+	{
+		unsigned int location = glGetUniformLocation(ID, uniform.c_str());
+		glUniform2f(location, x, y);
+	}
+
+	void Shader::setUniformVec3(const std::string& uniform, const glm::vec3& value) const
+	{
+		unsigned int location = glGetUniformLocation(ID, uniform.c_str());
+		glUniform3fv(location, 1, &value[0]);
+	}
+
+	void Shader::setUniformVec3(const std::string& uniform, float x, float y, float z) const
+	{
+		unsigned int location = glGetUniformLocation(ID, uniform.c_str());
+		glUniform3f(location, x, y, z);
+	}
+
+	void Shader::setUniformVec4(const std::string& uniform, const glm::vec4& value) const
+	{
+		unsigned int location = glGetUniformLocation(ID, uniform.c_str());
+		glUniform4fv(location, 1, &value[0]);
+	}
+
+	void Shader::setUniformVec4(const std::string& uniform, float x, float y, float z, float w) const
+	{
+		unsigned int location = glGetUniformLocation(ID, uniform.c_str());
+		glUniform4f(location, x, y, z, w);
+	}
+
+	void Shader::setUniformMat2(const std::string& uniform, const glm::mat2& mat) const
+	{
+		unsigned int location = glGetUniformLocation(ID, uniform.c_str());
+		glUniformMatrix2fv(location, 1, GL_FALSE, &mat[0][0]);
+	}
+
+	void Shader::setUniformMat3(const std::string& uniform, const glm::mat3& mat) const
+	{
+		unsigned int location = glGetUniformLocation(ID, uniform.c_str());
+		glUniformMatrix3fv(location, 1, GL_FALSE, &mat[0][0]);
+	}
+
+	void Shader::setUniformMat4(const std::string& uniform, const glm::mat4& mat) const
+	{
+		unsigned int location = glGetUniformLocation(ID, uniform.c_str());
+		glUniformMatrix4fv(location, 1, GL_FALSE, &mat[0][0]);
+	}
 }

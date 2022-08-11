@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="src\Core\Render\Render.h" />
     <ClInclude Include="src\Core\Render\Buffer.h" />
     <ClInclude Include="Dependencies\glm\common.hpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="src\Core\Render\Render.cpp" />
     <ClCompile Include="src\Core\Render\Buffer.cpp" />
     <ClCompile Include="Dependencies\glad\src\glad.c">

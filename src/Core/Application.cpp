@@ -169,8 +169,9 @@ namespace SheeEngine
 
 	void Application::RenderSquare()
 	{
-		std::shared_ptr<Shader> squareShader(new Shader("D:/GameCode/SheeEngine/src/Core/GLSL/ver_square.glsl", 
-				"D:/GameCode/SheeEngine/src/Core/GLSL//fra_square.glsl"));
+		std::shared_ptr<Shader> squareShader = 
+		std::make_shared<Shader>("D:/GameCode/SheeEngine/src/Core/GLSL/ver_square.glsl", 
+				"D:/GameCode/SheeEngine/src/Core/GLSL//fra_square.glsl");
 
 		RenderStaticLib::Draw(squareShader, m_VAO);
 	}
