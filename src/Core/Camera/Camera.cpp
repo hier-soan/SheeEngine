@@ -8,17 +8,17 @@ namespace SheeEngine
 	* Constructor
 	*******************************************/
 	Camera::Camera(vec3 position, vec3 worldup)
-		: Front(vec3(0.0f, 0.0f, -1.0f)), 
-		  Position(position), 
-		  WorldUp(worldup)
+		: m_Front(vec3(0.0f, 0.0f, -1.0f)), 
+		  m_Position(position), 
+		  m_WorldUp(worldup)
 	{
 		UpdateCameraVectors();
 	}
 
 	Camera::Camera(float posX, float posY, float posZ, float worldupX, float worldupY, float worldupZ)
-		: Front(vec3(0.0f, 0.0f, -1.0f)), 
-		  Position(vec3(posX, posY, posZ)), 
-		  WorldUp(vec3(worldupX, worldupY, worldupZ))
+		: m_Front(vec3(0.0f, 0.0f, -1.0f)), 
+		  m_Position(vec3(posX, posY, posZ)), 
+		  m_WorldUp(vec3(worldupX, worldupY, worldupZ))
 	{
 		UpdateCameraVectors();
 	}
@@ -29,32 +29,32 @@ namespace SheeEngine
 	*********************************************/
 	void Camera::MoveForward(float deltaTime)
 	{
-		Position += Front * (CameraSpeed * deltaTime);
+		m_Position += m_Front * (m_CameraSpeed * deltaTime);
 	}
 
 	inline void Camera::MoveBackward(float deltaTime)
 	{
-		Position -= Front * (CameraSpeed * deltaTime);
+		m_Position -= m_Front * (m_CameraSpeed * deltaTime);
 	}
 
 	inline void Camera::MoveLeft(float deltaTime)
 	{
-		Position -= glm::normalize(glm::cross(Front, Up)) * (CameraSpeed * deltaTime);
+		m_Position -= glm::normalize(glm::cross(m_Front, m_Up)) * (m_CameraSpeed * deltaTime);
 	}
 
 	inline void Camera::MoveRight(float deltaTime)
 	{
-		Position += glm::normalize(glm::cross(Front, Up)) * (CameraSpeed * deltaTime);
+		m_Position += glm::normalize(glm::cross(m_Front, m_Up)) * (m_CameraSpeed * deltaTime);
 	}
 
 	void Camera::MoveUp(float deltaTime)
 	{
-		Position += Up * (CameraSpeed * deltaTime);
+		m_Position += m_Up * (m_CameraSpeed * deltaTime);
 	}
 
 	void Camera::MoveDown(float deltaTime)
 	{
-		Position -= Up * (CameraSpeed * deltaTime);
+		m_Position -= m_Up * (m_CameraSpeed * deltaTime);
 	}
 
 	/********************************************
@@ -82,8 +82,8 @@ namespace SheeEngine
 		XOffset = MousePosX - LastPosX;
 		YOffset = LastPosY - MousePosY;
 
-		Yaw += XOffset * MouseSensitivity;
-		Pitch += YOffset * MouseSensitivity;
+		m_Yaw += XOffset * m_MouseSensitivity;
+		m_Pitch += YOffset * m_MouseSensitivity;
 
 		/* limite range of pitch angle */
 		if (Pitch > 89.0f)
@@ -107,14 +107,14 @@ namespace SheeEngine
 	**********************************************/
 	void Camera::ScrollFOV_Callback(double yOffset)
 	{
-		Fov -= static_cast<float>(yOffset);
-		if (Fov > FOV)
+		m_Fov -= static_cast<float>(yOffset);
+		if (m_Fov > FOV)
 		{
-			Fov = FOV;
+			m_Fov = FOV;
 		}
-		if (Fov < 1.0f)
+		if (m_Fov < 1.0f)
 		{
-			Fov = 1.0f;
+			m_Fov = 1.0f;
 		}
 	}
 
@@ -125,13 +125,13 @@ namespace SheeEngine
 	void Camera::UpdateCameraVectors()
 	{
 		glm::vec3 front;
-		front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-		front.y = sin(glm::radians(Pitch));
-		front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-		Front = glm::normalize(front);
+		front.x = cos(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
+		front.y = sin(glm::radians(m_Pitch));
+		front.z = sin(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
+		m_Front = glm::normalize(front);
 		/* schimidt orthogonalization */
-		Right = glm::normalize(glm::cross(Front, WorldUp));
-		Up = glm::normalize(glm::cross(Right, Front));
+		m_Right = glm::normalize(glm::cross(m_Front, m_WorldUp));
+		m_Up = glm::normalize(glm::cross(m_Right, m_Front));
 	}
 
 }
